@@ -1,0 +1,22 @@
+[
+    {
+        "id": "preferences",
+        "children": [
+            {
+                "id": "package-settings",
+                "children": [
+                    {
+                        "caption": "Sublime Atari 6502",
+                        "children": [
+                            {
+                                "caption": "Settings",
+                                "command": "edit_settings",
+                                "args": {"base_file": "$packages/Sublime Atari 6502/Sublime Atari 6502.sublime-settings"}
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

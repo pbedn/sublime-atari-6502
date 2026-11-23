@@ -1,0 +1,5 @@
+{
+    "selector": "source.asm6502.dasm",
+    "target": "asm6502_build",
+    "cancel": {"kill": true}
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+    <key>scope</key>
+    <string>source.asm6502 entity.name.label, source.asm6502 entity.name.constant, source.asm6502 entity.name.function.macro</string>
+    <key>settings</key>
+    <dict>
+        <key>showInSymbolList</key>
+        <integer>1</integer>
+    </dict>
+</dict>
+</plist>

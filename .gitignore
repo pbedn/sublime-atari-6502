@@ -1,0 +1,8 @@
+*.sublime-package
+*.sublime-workspace
+package-metadata.json
+__pycache__/
+*.pyc
+build/
+.DS_Store
+Thumbs.db

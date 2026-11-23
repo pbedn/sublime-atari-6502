@@ -1,0 +1,9 @@
+[
+    {"caption": "Atari 6502: Open Include File", "command": "asm6502_open_include"},
+    {"caption": "Atari 6502: Run Program", "command": "asm6502_build", "args": {"action": "run"}},
+    {
+        "caption": "Preferences: Sublime Atari 6502 Settings",
+        "command": "edit_settings",
+        "args": {"base_file": "$packages/Sublime Atari 6502/Sublime Atari 6502.sublime-settings"}
+    }
+]

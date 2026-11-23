@@ -1,0 +1,99 @@
+%YAML 1.2
+---
+name: Atari 6502 (DASM)
+scope: source.asm6502.dasm
+version: 2
+file_extensions:
+  - asm
+
+variables:
+  mnemonics: '(?i:adc|and|asl|bcc|bcs|beq|bit|bmi|bne|bpl|brk|bvc|bvs|clc|cld|cli|clv|cmp|cpx|cpy|dec|dex|dey|eor|inc|inx|iny|jmp|jsr|lda|ldx|ldy|lsr|nop|ora|pha|php|pla|plp|rol|ror|rti|rts|sbc|sec|sed|sei|sta|stx|sty|tax|tay|tsx|txa|txs|tya)'
+  cmos: '(?i:bra|dea|ina|phx|phy|plx|ply|stp|stz|trb|tsb|wai|[rs]mb[0-7]|bb[rs][0-7])'
+  global_label: '[A-Za-z_][A-Za-z0-9_.$]*'
+  local_label: '\.[A-Za-z0-9_][A-Za-z0-9_.$]*'
+  dasm_directive: '(?i:\.?(?:align|byte|dc|ds|dv|echo|else|end|endif|endm|equ|eqm|err|hex|if|ifconst|ifnconst|incbin|incdir|include|list|long|mac|mexit|org|processor|rend|repend|repeat|rorg|seg|set|setstr|subroutine|word)(?:\.[a-z][a-z0-9]*)?)'
+
+contexts:
+  main:
+    - match: '^({{global_label}})(?=[ \t]*=(?!=)|[ \t]+(?i:equ|eqm|setstr|set)\b)'
+      captures:
+        1: entity.name.constant.asm6502
+      push: statement
+    - match: '^({{local_label}})(:)?(?=[ \t;]|$)'
+      captures:
+        1: entity.name.label.local.asm6502
+        2: punctuation.separator.label.asm6502
+      push: statement
+    - match: '^({{global_label}})(:)?(?=[ \t;]|$)'
+      captures:
+        1: entity.name.label.asm6502
+        2: punctuation.separator.label.asm6502
+      push: statement
+    - match: '^[ \t]+'
+      push: statement
+    - match: '\{[0-9]+\}'
+      scope: variable.parameter.macro.asm6502
+    - match: '\b{{mnemonics}}\.[A-Za-z][A-Za-z0-9]*\b'
+      scope: keyword.mnemonic.asm6502
+    - match: '(?<![A-Za-z0-9_.$]){{local_label}}'
+      scope: variable.other.label.local.asm6502
+    - match: ';'
+      scope: punctuation.definition.comment.asm6502
+      push: line-comment
+    - match: '"'
+      scope: punctuation.definition.string.begin.asm6502
+      push: double-quoted
+    - match: "'[^'\n]'"
+      scope: string.quoted.single.asm6502
+    - match: '\$[0-9A-Fa-f]+\b'
+      scope: constant.numeric.hexadecimal.asm6502
+    - match: '%[01]+\b'
+      scope: constant.numeric.binary.asm6502
+    - match: '\b[0-9]+\b'
+      scope: constant.numeric.decimal.asm6502
+    - match: '(?i)\b(asl|lsr|rol|ror|inc|dec)[ \t]+(a)(?=[ \t]*(?:;|$))'
+      captures:
+        1: keyword.mnemonic.asm6502
+        2: variable.language.register.asm6502
+    - match: '\b{{mnemonics}}\b'
+      scope: keyword.mnemonic.asm6502
+    - match: '\b{{cmos}}\b'
+      scope: keyword.mnemonic.cmos.asm6502
+    - match: '(,)[ \t]*([XxYy])\b'
+      captures:
+        1: punctuation.separator.asm6502
+        2: variable.language.register.asm6502
+    - match: '#'
+      scope: punctuation.definition.immediate.asm6502
+    - match: '{{global_label}}'
+      scope: variable.other.asm6502
+    - match: '=|\+|-|\*|/|[<>!&|^~]'
+      scope: keyword.operator.asm6502
+    - match: '[,()]'
+      scope: punctuation.separator.asm6502
+
+  statement:
+    - match: '[ \t]+'
+    - match: '(?i)(\.?mac)[ \t]+({{global_label}})'
+      captures:
+        1: keyword.control.directive.asm6502
+        2: entity.name.function.macro.asm6502
+      pop: true
+    - match: '{{dasm_directive}}(?![A-Za-z0-9_.$])'
+      scope: keyword.control.directive.asm6502
+      pop: true
+    - match: '(?=\S|$)'
+      pop: true
+
+  line-comment:
+    - meta_scope: comment.line.semicolon.asm6502
+    - match: '$'
+      pop: true
+
+  double-quoted:
+    - meta_scope: string.quoted.double.asm6502
+    - match: '"'
+      scope: punctuation.definition.string.end.asm6502
+      pop: true
+    - match: '$'
+      pop: true
