@@ -14,6 +14,20 @@ If you installed the earlier `6502 Assembly` package manually, remove that insta
 
 Only `.asm` files get the syntax automatically. To highlight an include file with another extension, choose **Atari 6502 (DASM)** in the status bar syntax menu.
 
+## Editing
+
+Press **Enter** after a standalone label at the left margin to start the next line four spaces in. Sublime Text carries that indentation through subsequent instruction lines. Press **Shift+Tab** on a new indented line to return to the left margin for the next label.
+
+## Build the package archive
+
+Run this from the repository root with Python 3.8 or newer.
+
+```sh
+python scripts/build_package.py
+```
+
+The script packs the current source files into `Sublime Atari 6502.sublime-package` at the repository root, replacing any previous local archive. Attach that file to a GitHub release to provide a manual download.
+
 ## Package preferences
 
 **Preferences: Sublime Atari 6502 Settings** in the Command Palette opens the package preferences. The only setting there is `dasm_path`. Set it to the full path of the DASM executable, or leave it blank to use `PATH`. You can build a single `.asm` file with this setup alone.
