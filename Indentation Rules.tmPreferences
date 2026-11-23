@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+    <key>scope</key>
+    <string>source.asm6502.dasm</string>
+    <key>settings</key>
+    <dict>
+        <key>increaseIndentPattern</key>
+        <string>^(?:[A-Za-z_][A-Za-z0-9_.$]*|\.[A-Za-z0-9_][A-Za-z0-9_.$]*|[0-9]+\$)(?::)?[ \t]*(?:;.*)?$</string>
+        <!-- Leading whitespace can distinguish a label from a statement in DASM. -->
+        <key>preserveIndent</key>
+        <true/>
+    </dict>
+</dict>
+</plist>
